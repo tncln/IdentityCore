@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace IdentityCore.Context
 {
-    public class IdentityContext:IdentityDbContext
+    public class IdentityContext:IdentityDbContext<AppUser,AppRole,int>
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("server=.; database=IdentityCore;  integrated security=true;");
             base.OnConfiguring(optionsBuilder);
-        }
+        } 
     }
 }

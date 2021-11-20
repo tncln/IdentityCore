@@ -1,0 +1,30 @@
+﻿@model SignInViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    
+    <form class="w-50 mx-auto p-4 mt-5 shadow" asp-action="KayitOl">
+        <h4 class="text-center lead" >Giriş Yap</h4>
+        <div class="form-group">
+            <input asp-for="@Model.UserName" class="form-control" /> 
+        </div>
+        <div class="form-group"> 
+            <input asp-for="@Model.Password" class="form-control" />
+        </div>
+        <input type="submit" class="btn btn-primary" value="Giriş Yap" /><br />
+        <small>Kayıt Ol</small>  <a asp-action="KayitOl" class="btn btn-light"></a>
+    </form>
+
+</body>
+</html>
