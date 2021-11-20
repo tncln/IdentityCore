@@ -14,16 +14,20 @@
 </head>
 <body>
     
-    <form class="w-50 mx-auto p-4 mt-5 shadow" asp-action="KayitOl">
+    <form class="w-50 mx-auto p-4 mt-5 shadow" asp-action="GirisYap">
         <h4 class="text-center lead" >Giriş Yap</h4>
         <div class="form-group">
+            <label asp-for="@Model.UserName"></label>
+            <span asp-validation-for="@Model.UserName" class="text-danger"></span>
             <input asp-for="@Model.UserName" class="form-control" /> 
         </div>
-        <div class="form-group"> 
+        <div class="form-group">
+            <label asp-for="@Model.Password"></label>
+            <span asp-validation-for="@Model.Password" class="text-danger"></span>
             <input asp-for="@Model.Password" class="form-control" />
         </div>
         <input type="submit" class="btn btn-primary" value="Giriş Yap" /><br />
-        <small>Kayıt Ol</small>  <a asp-action="KayitOl" class="btn btn-light"></a>
+        <small>Kayıt Ol</small>  <a asp-action="KayitOl" class="btn btn-light">Kayıt Ol</a>
     </form>
 
 </body>

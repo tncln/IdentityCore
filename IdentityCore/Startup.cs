@@ -24,7 +24,15 @@ namespace IdentityCore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<IdentityContext>();
-            services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<IdentityContext>();
+
+            services.AddIdentity<AppUser, AppRole>(opt=> {
+                //Þifre zorunluluklarý kaldýrýlýyor. Büyük küçük harf sayý özel karakter vb. 
+                opt.Password.RequireDigit = false;
+                opt.Password.RequireLowercase = false;
+                opt.Password.RequiredLength = 1;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireUppercase = false;  
+            }).AddEntityFrameworkStores<IdentityContext>();
             services.AddRazorPages();
             services.AddControllersWithViews();
         }
