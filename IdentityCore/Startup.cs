@@ -33,6 +33,13 @@ namespace IdentityCore
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.Password.RequireUppercase = false;  
             }).AddEntityFrameworkStores<IdentityContext>();
+            services.ConfigureApplicationCookie(opt=> {
+                opt.Cookie.HttpOnly = true;
+                opt.Cookie.Name = "CookieIdendity";
+                opt.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
+                opt.Cookie.SecurePolicy = Microsoft.AspNetCore.Http.CookieSecurePolicy.SameAsRequest;
+                opt.ExpireTimeSpan = TimeSpan.FromDays(20);
+            });
             services.AddRazorPages();
             services.AddControllersWithViews();
         }
@@ -49,9 +56,7 @@ namespace IdentityCore
                 app.UseExceptionHandler("/Error");
             }
 
-            app.UseStaticFiles();
-
-            app.UseStaticFiles();
+            app.UseStaticFiles(); 
 
             app.UseRouting();
 
