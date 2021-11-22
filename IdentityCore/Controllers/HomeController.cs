@@ -28,6 +28,12 @@ namespace IdentityCore.Controllers
             if (ModelState.IsValid)
             {
                var result=await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, true);
+
+                if (result.IsLockedOut)
+                {
+                    ModelState.AddModelError("","5 kere yanlış giriş yaptığınız için Hesabınız kilitlendi.");
+                }
+                
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Panel");
