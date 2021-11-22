@@ -26,6 +26,12 @@
             <span asp-validation-for="@Model.Password" class="text-danger"></span>
             <input asp-for="@Model.Password" class="form-control" />
         </div>
+        <div class="form-check">
+            <input type="checkbox"  asp-for="@Model.RememberMe" class="form-check-input"/>
+            <label class="form-check-label" asp-for="@Model.RememberMe">
+
+            </label>
+        </div>
         <input type="submit" class="btn btn-primary" value="Giriş Yap" /><br />
         <small>Kayıt Ol</small>  <a asp-action="KayitOl" class="btn btn-light">Kayıt Ol</a>
     </form>
