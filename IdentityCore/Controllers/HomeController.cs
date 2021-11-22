@@ -32,13 +32,15 @@ namespace IdentityCore.Controllers
                 if (result.IsLockedOut)
                 {
                     ModelState.AddModelError("","5 kere yanlış giriş yaptığınız için Hesabınız kilitlendi.");
+                    return RedirectToAction("Index", model);
                 }
                 
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Panel");
                 }
-                ModelState.AddModelError("", "Kullanıcı Adı veya Şifre Hatalı");
+                var failedCount= await _userManager.GetAccessFailedCountAsync(await _userManager.FindByNameAsync(model.UserName));
+                ModelState.AddModelError("", $"Kullanıcı Adı veya Şifre Hatalı {5-failedCount} kadar yanlış girme hakkınız kaldı");
             }
             return View("Index",model);
         }

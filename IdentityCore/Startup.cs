@@ -31,7 +31,9 @@ namespace IdentityCore
                 opt.Password.RequireLowercase = false;
                 opt.Password.RequiredLength = 1;
                 opt.Password.RequireNonAlphanumeric = false;
-                opt.Password.RequireUppercase = false;  
+                opt.Password.RequireUppercase = false;
+                opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+                opt.Lockout.MaxFailedAccessAttempts = 3; 
             }).AddEntityFrameworkStores<IdentityContext>();
             services.ConfigureApplicationCookie(opt=> {
                 opt.Cookie.HttpOnly = true;
