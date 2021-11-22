@@ -27,7 +27,7 @@ namespace IdentityCore.Controllers
         {
             if (ModelState.IsValid)
             {
-               var result=await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
+               var result=await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, true);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Panel");
