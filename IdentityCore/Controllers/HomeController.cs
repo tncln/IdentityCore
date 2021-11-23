@@ -27,22 +27,27 @@ namespace IdentityCore.Controllers
         {
             if (ModelState.IsValid)
             {
-               var result=await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, true);
+                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, true);
 
                 if (result.IsLockedOut)
                 {
-                    ModelState.AddModelError("","5 kere yanlış giriş yaptığınız için Hesabınız kilitlendi.");
-                    return RedirectToAction("Index", model);
+                    var gelen = await _userManager.GetLockoutEndDateAsync(await _userManager.FindByNameAsync(model.UserName));
+
+                    var kisitlananSure = gelen.Value;
+                    var kalanDakika = kisitlananSure.Minute - DateTime.Now.Minute;
+
+                    ModelState.AddModelError("", $"5 kere yanlış giriş yaptığınız için Hesabınız kilitlendi. Hesabınız kalan dakika {kalanDakika} kadar kilitlenmiştir. ");
+                    return View("Index", model);
                 }
-                
+
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Panel");
                 }
-                var failedCount= await _userManager.GetAccessFailedCountAsync(await _userManager.FindByNameAsync(model.UserName));
-                ModelState.AddModelError("", $"Kullanıcı Adı veya Şifre Hatalı {5-failedCount} kadar yanlış girme hakkınız kaldı");
+                var failedCount = await _userManager.GetAccessFailedCountAsync(await _userManager.FindByNameAsync(model.UserName));
+                ModelState.AddModelError("", $"Kullanıcı Adı veya Şifre Hatalı {5 - failedCount} kadar yanlış girme hakkınız kaldı");
             }
-            return View("Index",model);
+            return View("Index", model);
         }
         public IActionResult KayitOl()
         {
@@ -60,7 +65,7 @@ namespace IdentityCore.Controllers
                     SurName = model.SurName,
                     UserName = model.UserName
                 };
-               var result=  await _userManager.CreateAsync(user,model.Password);
+                var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index");
