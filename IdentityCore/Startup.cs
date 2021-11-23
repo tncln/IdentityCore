@@ -1,4 +1,5 @@
 using IdentityCore.Context;
+using IdentityCore.CustomValidator;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -27,16 +28,16 @@ namespace IdentityCore
 
             services.AddIdentity<AppUser, AppRole>(opt=> {
                 //Þifre zorunluluklarý kaldýrýlýyor. Büyük küçük harf sayý özel karakter vb. 
-                opt.Password.RequireDigit = false;
-                opt.Password.RequireLowercase = false;
-                opt.Password.RequiredLength = 1;
-                opt.Password.RequireNonAlphanumeric = false;
-                opt.Password.RequireUppercase = false;
-                opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
-                opt.Lockout.MaxFailedAccessAttempts = 3; 
-            }).AddEntityFrameworkStores<IdentityContext>();
+                //opt.Password.RequireDigit = false;
+                //opt.Password.RequireLowercase = false;
+                //opt.Password.RequiredLength = 1;
+                //opt.Password.RequireNonAlphanumeric = false;
+                //opt.Password.RequireUppercase = false;
+                //opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+                //opt.Lockout.MaxFailedAccessAttempts = 3; 
+            }).AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<IdentityContext>();
             services.ConfigureApplicationCookie(opt=> {
-                opt.Cookie.HttpOnly = true;
+                opt.Cookie.HttpOnly = true; 
                 opt.Cookie.Name = "CookieIdendity";
                 opt.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
                 opt.Cookie.SecurePolicy = Microsoft.AspNetCore.Http.CookieSecurePolicy.SameAsRequest;
