@@ -35,7 +35,9 @@ namespace IdentityCore
                 //opt.Password.RequireUppercase = false;
                 //opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
                 //opt.Lockout.MaxFailedAccessAttempts = 3; 
-            }).AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<IdentityContext>();
+            }).AddPasswordValidator<CustomPasswordValidator>()
+            .AddErrorDescriber<CustomIdentityValidator>()
+            .AddEntityFrameworkStores<IdentityContext>();
             services.ConfigureApplicationCookie(opt=> {
                 opt.Cookie.HttpOnly = true; 
                 opt.Cookie.Name = "CookieIdendity";
