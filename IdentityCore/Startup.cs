@@ -34,7 +34,7 @@ namespace IdentityCore
                 //opt.Password.RequireUppercase = false;
                 //opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
                 //opt.Lockout.MaxFailedAccessAttempts = 3; 
-            }).AddPasswordValidator<CustomPasswordValidator>()
+            }).AddPasswordValidator<CustomPasswordValidator>() 
             .AddErrorDescriber<CustomIdentityValidator>()
             .AddEntityFrameworkStores<IdentityContext>();
             services.ConfigureApplicationCookie(opt=> {
