@@ -38,6 +38,7 @@ namespace IdentityCore
             .AddErrorDescriber<CustomIdentityValidator>()
             .AddEntityFrameworkStores<IdentityContext>();
             services.ConfigureApplicationCookie(opt=> {
+                opt.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Home/Index");
                 opt.Cookie.HttpOnly = true; 
                 opt.Cookie.Name = "CookieIdendity";
                 opt.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
@@ -60,8 +61,9 @@ namespace IdentityCore
                 app.UseExceptionHandler("/Error");
             }
 
-            app.UseStaticFiles(); 
-
+            app.UseStaticFiles();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseRouting();
 
             app.UseAuthorization();
