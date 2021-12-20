@@ -35,7 +35,7 @@ namespace IdentityCore.Controllers
 
                     var kisitlananSure = gelen.Value;
                     var kalanDakika = kisitlananSure.Minute - DateTime.Now.Minute;
-
+                     
                     ModelState.AddModelError("", $"5 kere yanlış giriş yaptığınız için Hesabınız kilitlendi. Hesabınız kalan dakika {kalanDakika} kadar kilitlenmiştir. ");
                     return View("Index", model);
                 }
