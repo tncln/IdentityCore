@@ -39,7 +39,11 @@ namespace IdentityCore.Controllers
                     ModelState.AddModelError("", $"5 kere yanlış giriş yaptığınız için Hesabınız kilitlendi. Hesabınız kalan dakika {kalanDakika} kadar kilitlenmiştir. ");
                     return View("Index", model);
                 }
-
+                if (result.IsNotAllowed)
+                {
+                    ModelState.AddModelError("", $"Önce lütfen email adresinizi doğrulayınız..");
+                    return View("Index", model);
+                }
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Panel");

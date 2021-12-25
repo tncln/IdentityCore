@@ -27,13 +27,14 @@ namespace IdentityCore
 
             services.AddIdentity<AppUser, AppRole>(opt=> {
                 //Þifre zorunluluklarý kaldýrýlýyor. Büyük küçük harf sayý özel karakter vb. 
-                //opt.Password.RequireDigit = false;
-                //opt.Password.RequireLowercase = false;
-                //opt.Password.RequiredLength = 1;
-                //opt.Password.RequireNonAlphanumeric = false;
-                //opt.Password.RequireUppercase = false;
-                //opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
-                //opt.Lockout.MaxFailedAccessAttempts = 3; 
+                opt.Password.RequireDigit = false;
+                opt.Password.RequireLowercase = false;
+                opt.Password.RequiredLength = 1;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireUppercase = false;
+                opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+                opt.Lockout.MaxFailedAccessAttempts = 3;
+                opt.SignIn.RequireConfirmedEmail = true;
             }).AddPasswordValidator<CustomPasswordValidator>()  
             .AddErrorDescriber<CustomIdentityValidator>()
             .AddEntityFrameworkStores<IdentityContext>();
