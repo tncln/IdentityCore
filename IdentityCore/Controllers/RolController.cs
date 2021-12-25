@@ -1,4 +1,5 @@
 ﻿using IdentityCore.Context;
+using IdentityCore.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,32 @@ namespace IdentityCore.Controllers
         public IActionResult Index()
         {
             return View(_roleManager.Roles.ToList());
+        }
+        public IActionResult AddRole()
+        {
+            return View(new RoleViewModel());
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddRole(RoleViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                AppRole appRole = new AppRole()
+                {
+                    Name = model.Name
+                };
+               var IdentityResult= await  _roleManager.CreateAsync(appRole);
+                if (IdentityResult.Succeeded)
+                {
+                    return RedirectToAction("Index");
+
+                }
+                foreach (var error in IdentityResult.Errors)
+                {
+                    ModelState.AddModelError("", error.Description); 
+                }
+            }
+            return View(new RoleViewModel());
         }
     }
 }
