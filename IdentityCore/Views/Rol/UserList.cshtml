@@ -10,6 +10,7 @@
     <tr>
         <td>AD</td>
         <td>İşlem</td>
+        <td>Roller</td>
     </tr>
     @if (Model.Count > 0)
     {
@@ -20,7 +21,9 @@
                 <td>
                     <a asp-action="AssignRole" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Rol Ata</a> 
                 </td>
-
+                <td>
+                    <rolegoster user-id="@item.Id"></rolegoster>
+                </td>
             </tr>
         }
     }

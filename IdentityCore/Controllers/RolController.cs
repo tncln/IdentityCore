@@ -94,6 +94,7 @@ namespace IdentityCore.Controllers
         public async Task<IActionResult> AssignRole(int id)
         {
             var user= _userManager.Users.FirstOrDefault(x => x.Id == id);
+            TempData["UserId"] = user.Id;
             var roles = _roleManager.Roles.ToList();
             var userRoles =await _userManager.GetRolesAsync(user);
 
@@ -108,6 +109,24 @@ namespace IdentityCore.Controllers
                 models.Add(model);
             }
             return View(models);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AssignRole(List<RoleAssignViewModel> models)
+        {
+           var userId=(int)TempData["UserId"];
+            var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
+            foreach (var item in models)
+            {
+                if (item.Exist)
+                {
+                   await _userManager.AddToRoleAsync(user, item.Name);
+                }
+                else
+                {
+                    await _userManager.RemoveFromRoleAsync(user, item.Name);
+                }
+            }
+            return RedirectToAction("UserList");
         }
     }
 }
