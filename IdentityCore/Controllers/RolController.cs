@@ -35,7 +35,7 @@ namespace IdentityCore.Controllers
                 {
                     Name = model.Name
                 };
-               var IdentityResult= await  _roleManager.CreateAsync(appRole);
+                var IdentityResult = await _roleManager.CreateAsync(appRole);
                 if (IdentityResult.Succeeded)
                 {
                     return RedirectToAction("Index");
@@ -43,10 +43,36 @@ namespace IdentityCore.Controllers
                 }
                 foreach (var error in IdentityResult.Errors)
                 {
-                    ModelState.AddModelError("", error.Description); 
+                    ModelState.AddModelError("", error.Description);
                 }
             }
             return View(new RoleViewModel());
+        }
+        public IActionResult UpdateRole(int id)
+        {
+            var role = _roleManager.Roles.FirstOrDefault(x => x.Id == id);
+            RoleUpdateViewModel model = new RoleUpdateViewModel
+            {
+                Id = role.Id,
+                Name = role.Name
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateRole(RoleUpdateViewModel model)
+        {
+            var tobeUpdatedRole = _roleManager.Roles.Where(x => x.Id == model.Id).FirstOrDefault();
+            tobeUpdatedRole.Name = model.Name;
+            var identityResult= await _roleManager.UpdateAsync(tobeUpdatedRole);
+            if (identityResult.Succeeded)
+            {
+                return RedirectToAction("Index");
+            }
+            foreach (var error in identityResult.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+            return View(model);
         }
     }
 }
