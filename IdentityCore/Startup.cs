@@ -48,6 +48,13 @@ namespace IdentityCore
                 opt.Cookie.SecurePolicy = Microsoft.AspNetCore.Http.CookieSecurePolicy.SameAsRequest;
                 opt.ExpireTimeSpan = TimeSpan.FromDays(20);
             });
+            services.AddAuthorization(opt=> {
+                opt.AddPolicy("FamilePolicy", cnf =>
+                {
+                    cnf.RequireClaim("gender", "female");
+                });
+                
+                });
             services.AddRazorPages();
             services.AddControllersWithViews();
         }
