@@ -91,5 +91,23 @@ namespace IdentityCore.Controllers
         {
             return View(_userManager.Users.ToList()); ;
         }
+        public async Task<IActionResult> AssignRole(int id)
+        {
+            var user= _userManager.Users.FirstOrDefault(x => x.Id == id);
+            var roles = _roleManager.Roles.ToList();
+            var userRoles =await _userManager.GetRolesAsync(user);
+
+            List<RoleAssignViewModel> models = new List<RoleAssignViewModel>();
+
+            foreach (var item in roles)
+            {
+                RoleAssignViewModel model = new RoleAssignViewModel();
+                model.RoleId = item.Id;
+                model.Name = item.Name;
+                model.Exist = userRoles.Contains(item.Name);
+                models.Add(model);
+            }
+            return View(models);
+        }
     }
 }
