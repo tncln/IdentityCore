@@ -40,6 +40,8 @@ namespace IdentityCore
             .AddEntityFrameworkStores<IdentityContext>();
             services.ConfigureApplicationCookie(opt=> {
                 opt.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Home/Index");
+                //Kullanýcýnýn yetkisi yoksa yönlendirileceði sayfa. 
+                opt.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Home/AccessDenied");
                 opt.Cookie.HttpOnly = true; 
                 opt.Cookie.Name = "CookieIdendity";
                 opt.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
